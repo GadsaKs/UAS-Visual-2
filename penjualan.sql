@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2024 at 11:45 AM
+-- Generation Time: Jul 12, 2024 at 05:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -42,9 +42,13 @@ CREATE TABLE `kustomer` (
 --
 
 INSERT INTO `kustomer` (`id`, `nik`, `nama`, `telp`, `email`, `alamat`, `member`) VALUES
-(1, 123, '123', '123', '123', '123', '123'),
-(2, 3, '2', '2', '2', '2', '2'),
-(4, 5, '5', '5', '5', '5', 'TIDAK');
+(1, 123, '5', '123', '123', '123', 'TIDAK'),
+(2, 3, '2', '2', '2', '2', 'YES'),
+(4, 2, 'Gadsa', '5', '5', '5', 'TIDAK'),
+(5, 15, '5', '3', '', '', 'TIDAK'),
+(6, 6, '6', '6', '6', '6', 'YES'),
+(7, 323424312, 'Muhammad rendi', '0831414131', 'rendi@gmail.com', 'Banjarmasin', 'YES'),
+(8, 92482842, 'Nor Hikmah', '08414131213', 'hikmah@gmail.com', 'Banjarmasin', 'TIDAK');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +68,7 @@ ALTER TABLE `kustomer`
 -- AUTO_INCREMENT for table `kustomer`
 --
 ALTER TABLE `kustomer`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

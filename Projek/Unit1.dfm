@@ -170,13 +170,19 @@ object Form1: TForm1
     Left = 120
     Top = 216
     Width = 89
-    Height = 21
-    ItemHeight = 13
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ItemHeight = 16
+    ParentFont = False
     TabOrder = 5
     Text = 'Pilih'
     OnClick = cMemberClick
   end
-  object Button1: TButton
+  object bBARU: TButton
     Left = 24
     Top = 256
     Width = 81
@@ -189,8 +195,9 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 6
+    OnClick = bBARUClick
   end
-  object Button3: TButton
+  object bEDIT: TButton
     Left = 216
     Top = 256
     Width = 81
@@ -203,7 +210,7 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 7
-    OnClick = Button3Click
+    OnClick = bEDITClick
   end
   object bHAPUS: TButton
     Left = 312
@@ -235,12 +242,13 @@ object Form1: TForm1
     TabOrder = 9
     OnClick = bbatalClick
   end
-  object Edit5: TEdit
+  object eCARI: TEdit
     Left = 192
     Top = 432
     Width = 289
     Height = 21
     TabOrder = 10
+    OnChange = eCARIChange
   end
   object DBGrid1: TDBGrid
     Left = 24

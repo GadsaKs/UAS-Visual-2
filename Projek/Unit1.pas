@@ -22,12 +22,12 @@ type
     Label7: TLabel;
     ldiskon: TLabel;
     cMember: TComboBox;
-    Button1: TButton;
-    Button3: TButton;
+    bBARU: TButton;
+    bEDIT: TButton;
     bHAPUS: TButton;
     bbatal: TButton;
     Label9: TLabel;
-    Edit5: TEdit;
+    eCARI: TEdit;
     DBGrid1: TDBGrid;
     bSIMPAN: TButton;
     bKELUAR: TButton;
@@ -39,10 +39,16 @@ type
     procedure bbatalClick(Sender: TObject);
     procedure bHAPUSClick(Sender: TObject);
     procedure DBGrid1CellClick(Column: TColumn);
-    procedure Button3Click(Sender: TObject);
+    procedure bEDITClick(Sender: TObject);
     procedure bSIMPANClick(Sender: TObject);
     procedure bKELUARClick(Sender: TObject);
     procedure bCETAKClick(Sender: TObject);
+    procedure eCARIChange(Sender: TObject);
+    procedure posisiawal;
+    procedure bersih;
+    procedure delay;
+    procedure bBARUClick(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -61,6 +67,8 @@ uses
 
 {$R *.dfm}
 
+
+
 procedure TForm1.cMemberClick(Sender: TObject);
 begin
   if cMember.text = 'YES' then
@@ -75,6 +83,8 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  Position := poScreenCenter;
+  posisiawal;
   cMember.Items.Add('YES');
   cMember.Items.Add('TIDAK');
 end;
@@ -87,11 +97,27 @@ begin
   eEMAIL.Text:= '';
   eALAMAT.Text:= '';
   cMember.Text:= 'Pilih';
-  ldiskon.Caption:= 'Terisi Otomatis'
+  ldiskon.Caption:= 'Terisi Otomatis';
+  eCARI.Text:= '';
+
+  bSIMPAN.Enabled:=False;
+  bBARU.Enabled:=True;
+  bKELUAR.Enabled:=True;
+  bEDIT.Enabled:=True;
+  bHAPUS.Enabled:=True;
+  bCETAK.Enabled:=True;
+
+  with DataModule3.Zkustomer do
+ begin
+    SQL.Clear;
+    SQL.Add('select * from kustomer');
+    Open;
+ end;
 end;
 
 procedure TForm1.bHAPUSClick(Sender: TObject);
 begin
+  bersih;
 with DataModule3.Zkustomer do
 begin
   SQL.Clear;
@@ -106,24 +132,25 @@ end;
 end;
 procedure TForm1.DBGrid1CellClick(Column: TColumn);
 begin
+  a:= DataModule3.Zkustomer.Fields[0].AsString;
   eNIK.Text:= DataModule3.Zkustomer.Fields[1].AsString;
-a:= DataModule3.Zkustomer.Fields[0].AsString;
+  eNAMA.Text:= DataModule3.Zkustomer.Fields[2].AsString;
+  eTELP.Text:= DataModule3.Zkustomer.Fields[3].AsString;
+  eEMAIL.Text:= DataModule3.Zkustomer.Fields[4].AsString;
+  eALAMAT.Text:= DataModule3.Zkustomer.Fields[5].AsString;
+  cMember.Text:= DataModule3.Zkustomer.Fields[6].AsString;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.bEDITClick(Sender: TObject);
 begin
 if eNIK.Text= '' then
   begin
     ShowMessage('NIK Tidak boleh kosong');
   end else
-if eNIK.Text= DataModule3.Zkustomer.Fields[1].AsString then
-  begin
-    ShowMessage('NIK '+eNIK.Text+ 'tidak ada perubahan');
-  end else
 with DataModule3.Zkustomer do
   begin
     SQL.Clear;
-    SQL.Add('update kustomer set nik="'+eNIK.text+'" where id= "'+a+'"');
+    SQL.Add('update kustomer set nik="'+eNIK.text+'", nama="'+eNAMA.Text+'", telp="'+eTELP.Text+'", email="'+eEMAIL.Text+'",alamat="'+eALAMAT.Text+'", member="'+cMember.Text+'" where id= "'+a+'"');
     ExecSQL ;
 
     SQL.Clear;
@@ -131,10 +158,19 @@ with DataModule3.Zkustomer do
     Open;
   end;
     ShowMessage('Data Berhasil Diupdate!');
+    delay;
+    bersih;
 end;
 
 procedure TForm1.bSIMPANClick(Sender: TObject);
 begin
+  bBARU.Enabled:=True;
+  bEDIT.Enabled:=True;
+  bHAPUS.Enabled:=True;
+  bKELUAR.Enabled:=True;
+  bCETAK.Enabled:=True;
+  bSIMPAN.Enabled:=False;
+
 if eNIK.Text = '' then
 begin
     ShowMessage('NIK Tidak Boleh Kosong!');
@@ -171,8 +207,11 @@ Open;
 end;
 ShowMessage('Data Berhasil Disimpan!');
 end;
+delay;
+bersih;
 
 end;
+
 procedure TForm1.bKELUARClick(Sender: TObject);
 begin
   if (Application.MessageBox('And Yakin ingin keluar?','Informasi',MB_YESNO)=IDYES) then
@@ -182,6 +221,49 @@ end;
 procedure TForm1.bCETAKClick(Sender: TObject);
 begin
   frLAPOR_KUSTOMER.ShowReport();
+end;
+
+procedure TForm1.eCARIChange(Sender: TObject);
+begin
+with DataModule3.Zkustomer do
+begin
+SQL.Clear;
+SQL.Add('select * from kustomer where nama like "%'+eCARI.Text+'%"');
+Open;
+end;
+end;
+
+procedure TForm1.posisiawal;
+begin
+ bSIMPAN.Enabled:=False;
+end;
+
+procedure TForm1.bersih;
+begin
+  eNIK.Text:= '';
+  eNAMA.Text:= '';
+  eTELP.Text:= '';
+  eEMAIL.Text:= '';
+  eALAMAT.Text:= '';
+  cMember.Text:= 'Pilih';
+  ldiskon.Caption:= 'Terisi Otomatis';
+  eCARI.Text:= '';
+end;
+
+procedure TForm1.bBARUClick(Sender: TObject);
+begin
+ bersih;
+  bSIMPAN.Enabled:= True;
+  bBARU.Enabled:= False;
+  bKELUAR.Enabled:= False;
+  bEDIT.Enabled:=False;
+  bHAPUS.Enabled:=False;
+  bCETAK.Enabled:=False;
+end;
+
+procedure TForm1.delay;
+begin
+ Sleep(500);
 end;
 
 end.
