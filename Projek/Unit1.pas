@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, DBGrids;
+  Dialogs, StdCtrls, Grids, DBGrids, frxClass, frxDBSet;
 
 type
   TForm1 = class(TForm)
@@ -31,6 +31,8 @@ type
     DBGrid1: TDBGrid;
     bSIMPAN: TButton;
     bKELUAR: TButton;
+    frxdbdtst1: TfrxDBDataset;
+    frLAPOR_KUSTOMER: TfrxReport;
     bCETAK: TButton;
     procedure cMemberClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -40,6 +42,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure bSIMPANClick(Sender: TObject);
     procedure bKELUARClick(Sender: TObject);
+    procedure bCETAKClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -174,6 +177,11 @@ procedure TForm1.bKELUARClick(Sender: TObject);
 begin
   if (Application.MessageBox('And Yakin ingin keluar?','Informasi',MB_YESNO)=IDYES) then
   close
+end;
+
+procedure TForm1.bCETAKClick(Sender: TObject);
+begin
+  frLAPOR_KUSTOMER.ShowReport();
 end;
 
 end.
